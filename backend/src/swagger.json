@@ -1,0 +1,187 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentación de la API GestioChat",
+        "description": "documentacion de  API Gestiochat",
+        "contact": {
+            "whatsapp": "https://wa.me/51925465788"
+        },
+        "version": "1.1.0"
+    },
+    "servers": [
+        {
+            "url": "https://localhost/8080",
+            "description": "API GestioChat"
+        }
+    ],
+    "paths": {
+        "/api/send": {
+            "post": {
+                "summary": "Envio de Mensajes",
+                "description": "Envio de Mensajes",
+                "tags": [
+                    "SEND"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/SEND"
+                            },
+                            "examples": {
+                                "SEND1": {
+                                    "value": {
+                                        "number": "51930123123",
+                                        "body": "Mensaje de prueba de la API"
+                                    }
+                                },
+                                "SEND2": {
+                                    "value": {
+                                        "number": "51930123123",
+                                        "body": "Mensaje de prueba de la API",
+                                        "whatsappId": "ID do Setor",
+                                        "queueId": "ID do Setor",
+                                        "tagsId": "ID da Tag",
+                                        "userId": "ID de atendente"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#components/schemas/SEND"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Acceso no autorizado!"
+                    },
+                    "500": {
+                        "description": "Erro interno!"
+                    }
+                }
+            }
+        },
+        "/api/queue/list": {
+            "get": {
+                "summary": "Busca lista de Sectores & Areas",
+                "tags": [
+                    "Queue"
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#components/schemas/Queue"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SEND": {
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "name": "number",
+                        "description": "Número de teléfono para enviar el mensaje. Debe incluir el código del país (sin signo más inicial ni cero).",
+                        "required": true,
+                        "type": "number"
+                    },
+                    "body": {
+                        "name": "body",
+                        "description": "Cuerpo del mensaje a enviar.",
+                        "required": true,
+                        "type": "string"
+                    },
+                    "whatsappId": {
+                        "name": "whatsappId",
+                        "description": "Cuerpo del mensaje a enviar.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    "queueId": {
+                        "name": "queueId",
+                        "description": "Cuerpo del mensaje a enviar.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    "tagsId": {
+                        "name": "tagsId",
+                        "description": "Cuerpo del mensaje a enviar.",
+                        "required": false,
+                        "type": "number"
+                    },
+                    "userId": {
+                        "name": "userId",
+                        "description": "Cuerpo del mensaje a enviar.",
+                        "required": false,
+                        "type": "number"
+                    }
+                }
+            },
+            "Queue": {
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "number"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "color": {
+                        "type": "string"
+                    },
+                    "greetingMessage": {
+                        "type": "string"
+                    },
+                    "startWork": {
+                        "type": "string"
+                    },
+                    "endWork": {
+                        "type": "string"
+                    },
+                    "absenceMessage": {
+                        "type": "string"
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
